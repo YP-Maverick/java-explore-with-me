@@ -1,9 +1,8 @@
-package ru.practicum.ewm.stats.client.config;
+package ru.practicum.ewm.main.config;
 
 import org.springframework.context.annotation.Configuration;
 import ru.practicum.ewm.stats.dto.config.DataTimeStatsConfig;
 
 @Configuration
-public class StatsClientConfig extends DataTimeStatsConfig {
+public class EwmMainConfig extends DataTimeStatsConfig {
 }
-
