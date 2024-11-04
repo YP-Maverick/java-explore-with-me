@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import ru.practicum.ewm.main.categories.controller.AdminCategoryController;
 import ru.practicum.ewm.main.categories.controller.PublicCategoryController;
+import ru.practicum.ewm.main.comments.controller.AdminCommentController;
+import ru.practicum.ewm.main.comments.controller.PublicCommentController;
 import ru.practicum.ewm.main.events.controller.AdminEventController;
 import ru.practicum.ewm.main.events.controller.PrivateEventController;
 import ru.practicum.ewm.main.events.controller.PublicEventController;
@@ -39,7 +41,9 @@ import java.util.Map;
         PublicEventController.class,
         PrivateRequestController.class,
         PublicCompilationController.class,
-        AdminCompilationController.class
+        AdminCompilationController.class,
+        AdminCommentController.class,
+        PublicCommentController.class
 })
 public class EwmExceptionHandler {
 
