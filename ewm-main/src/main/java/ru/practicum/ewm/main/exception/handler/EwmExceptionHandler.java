@@ -66,7 +66,7 @@ public class EwmExceptionHandler {
         for (ObjectError error : e.getBindingResult().getAllErrors()) {
             details.add(error.getDefaultMessage());
         }
-        return createMap("BAD_REQUEST", "Incorrectly made request", details.get(0));
+        return createMap("BAD_REQUEST", "Incorrectly made request", details.getFirst());
     }
 
     @ExceptionHandler({MissingServletRequestParameterException.class,

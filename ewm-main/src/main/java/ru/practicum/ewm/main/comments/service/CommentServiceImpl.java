@@ -27,10 +27,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
-    private CommentStorage commentStorage;
-    private CommentMapper commentMapper;
-    private EventStorage eventStorage;
-    private UserStorage userStorage;
+    private final CommentStorage commentStorage;
+    private final CommentMapper commentMapper;
+    private final EventStorage eventStorage;
+    private final UserStorage userStorage;
 
     @Override
     public CommentDto createComment(Long eventId, CreateCommentDto commentDto) {
