@@ -18,9 +18,10 @@ import ru.practicum.ewm.main.user.storage.UserStorage;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("checkstyle:Regexp")
+
 @Slf4j
 @Service
 @Transactional
@@ -88,8 +89,8 @@ public class CommentServiceImpl implements CommentService {
 
         if (includeChildren) {
             List<Comment> childComments = commentStorage.findByParentComment(comment);
-            comment.setChildren(childComments); // Устанавливаем дочерние комментарии
-            childComments.forEach(this::populateChildComments); // Если нужна рекурсия
+            comment.setChildren(childComments);
+            childComments.forEach(this::populateChildComments);
         }
 
         return commentMapper.toCommentDto(comment);
@@ -97,24 +98,31 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentDto> getCommentsByEvent(Long eventId, boolean includeChildren) {
-        List<Comment> comments = commentStorage.findByEvent_IdAndParentCommentIsNull(eventId);
+        List<Comment> allComments = commentStorage.findAllByEvent_Id(eventId);
 
         if (includeChildren) {
-            for (Comment comment : comments) {
-                List<Comment> childComments = commentStorage.findByParentComment(comment);
-                comment.setChildren(childComments);
-                childComments.forEach(this::populateChildComments);
-            }
+            Map<Long, Comment> commentMap = allComments.stream()
+                    .collect(Collectors.toMap(Comment::getCommentId, comment -> comment));
+
+            allComments.forEach(comment -> {
+                Comment parent = commentMap.get(comment.getParentComment() != null ? comment.getParentComment().getCommentId() : null);
+                if (parent != null) {
+                    parent.getChildren().add(comment);
+                }
+            });
         }
 
-        return comments.stream()
+        return allComments.stream()
+                .filter(comment -> comment.getParentComment() == null)
                 .map(commentMapper::toCommentDto)
                 .collect(Collectors.toList());
     }
 
+
+
     private void populateChildComments(Comment comment) {
         List<Comment> childComments = commentStorage.findByParentComment(comment);
         comment.setChildren(childComments);
-        childComments.forEach(this::populateChildComments); // Рекурсивно
+        childComments.forEach(this::populateChildComments);
     }
 }
