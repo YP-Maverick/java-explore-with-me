@@ -4,7 +4,6 @@ import jakarta.persistence.Column;
 import lombok.Builder;
 import lombok.Value;
 import ru.practicum.ewm.main.comments.model.Comment;
-import ru.practicum.ewm.main.events.model.Event;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ public class CommentDto {
 
     Long commentId;
 
-    Event event;
+    Long eventId;
 
     Long commentatorId;
 

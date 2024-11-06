@@ -13,11 +13,14 @@ import java.util.List;
 
 import lombok.*;
 
-@Entity
-@Table(name = "comments")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
+@Builder
+@Generated
+@Entity
+@Table(name = "comments")
 public class Comment {
 
     @Id
