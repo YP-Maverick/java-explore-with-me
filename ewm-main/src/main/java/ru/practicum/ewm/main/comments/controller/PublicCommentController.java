@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping(path = "/events/{eventId}/comments")
+@RequestMapping(path = "/admin/comments")
 public class PublicCommentController {
 
     private final CommentService commentService;
@@ -23,7 +23,7 @@ public class PublicCommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping
+    @PostMapping({"/{eventId}", "/{eventId}/"})
     public CommentDto createComment(
             @PathVariable Long eventId,
             @RequestBody @Valid CreateCommentDto createCommentDto) {
@@ -31,15 +31,16 @@ public class PublicCommentController {
         return commentService.createComment(eventId, createCommentDto);
     }
 
-    @GetMapping
+    @GetMapping({"/{eventId}", "/{eventId}/"})
     public List<CommentDto> getCommentsByEvent(
             @PathVariable Long eventId,
-            @RequestParam(defaultValue = "false") Boolean includeChildren) {
+            @RequestParam(defaultValue = "false") Boolean includeChildren
+    ) {
         log.info("Fetching comments for event ID: {}", eventId);
         return commentService.getCommentsByEvent(eventId, includeChildren);
     }
 
-    @GetMapping("/{commentId}")
+    @GetMapping({"/{eventId}/{commentId}", "/{eventId}/{commentId}"})
     public CommentDto getCommentById(
             @PathVariable Long eventId,
             @PathVariable Long commentId,

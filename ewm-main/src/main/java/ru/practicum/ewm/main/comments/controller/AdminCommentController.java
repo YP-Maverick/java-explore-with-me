@@ -10,7 +10,7 @@ import ru.practicum.ewm.main.comments.service.CommentService;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping(path = "/admin/events/{eventId}/comments")
+@RequestMapping(path = "/admin/comments")
 public class AdminCommentController {
 
     private final CommentService commentService;
@@ -20,7 +20,7 @@ public class AdminCommentController {
     }
 
     // Обновить комментарий - может только владелец
-    @PutMapping("/{commentId}")
+    @PutMapping({"/{eventId}/{commentId}", "/{eventId}/{commentId}/"})
     public CommentDto updateComment(
             @PathVariable Long eventId,
             @PathVariable Long commentId,
@@ -30,7 +30,7 @@ public class AdminCommentController {
     }
 
     // Удалить комментарий - может владелец события или комментария
-    @DeleteMapping("/{commentId}")
+    @DeleteMapping({"/{eventId}/{commentId}", "/{eventId}/{commentId}/"})
     public Long deleteComment(
             @PathVariable Long eventId,
             @PathVariable Long commentId) {
